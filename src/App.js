@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Card from './components/Card';
 import SearchBox from './components/SearchBox';
 import Scroll from './components/Scroll';
-
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -30,10 +30,12 @@ function App() {
       </div>
 
       <h1 className='text-light'>RoboFriends</h1>
+      <ErrorBoundary >
+        <Scroll>
+          {robots.filter(robot => robot.name.toLowerCase().includes(searchTerm.toLowerCase())).map(robot => <Card key={robot.id} id={robot.id} name={robot.name} email={robot.email} />)}
+        </Scroll>
+      </ErrorBoundary>
 
-      <Scroll>
-        {robots.filter(robot => robot.name.toLowerCase().includes(searchTerm.toLowerCase())).map(robot => <Card key={robot.id} id={robot.id} name={robot.name} email={robot.email} />)}
-      </Scroll>
 
     </div>
   );
